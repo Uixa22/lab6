@@ -38,18 +38,41 @@ class Program
         }
     }
     static void AddPassword()
+{
+    Console.Write("Enter account name: ");
+    string account = Console.ReadLine();
+
+    Console.Write("Enter password: ");
+    string password = Console.ReadLine();
+
+    if (!IsValidPassword(password))
     {
-        Console.Write("Enter account name: ");
-        string account = Console.ReadLine();
-
-        Console.Write("Enter password: ");
-        string password = Console.ReadLine();
-
-        string encryptedPassword = EncryptPassword(password);
-        passwordVault[account] = encryptedPassword;
-
-        Console.WriteLine($"Password for '{account}' added.");
+        Console.WriteLine("Password must contain at least one uppercase letter and one digit.");
+        return;
     }
+
+    string encryptedPassword = EncryptPassword(password);
+    passwordVault[account] = encryptedPassword;
+
+    Console.WriteLine($"Password for '{account}' added.");
+}
+static bool IsValidPassword(string password)
+{
+    bool hasUpperCase = false;
+    bool hasDigit = false;
+
+    foreach (char c in password)
+    {
+        if (char.IsUpper(c)) hasUpperCase = true;
+        if (char.IsDigit(c)) hasDigit = true;
+
+        if (hasUpperCase && hasDigit)
+            return true;
+    }
+    
+    return false;
+}
+
    static void ViewPasswords()
     {
         if (passwordVault.Count == 0)
