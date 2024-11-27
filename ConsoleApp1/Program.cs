@@ -88,4 +88,19 @@ class Program
             }
         }
     }
+    static string DecryptPassword(string encryptedPassword)
+    {
+        byte[] data = Convert.FromBase64String(encryptedPassword);
+        using (Aes aes = Aes.Create())
+        {
+            aes.Key = Encoding.UTF8.GetBytes("a16byteslongkey!");
+            aes.IV = Encoding.UTF8.GetBytes("a16byteslongiv!!");
+            using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+            {
+                byte[] decrypted = decryptor.TransformFinalBlock(data, 0, data.Length);
+                return Encoding.UTF8.GetString(decrypted);
+            }
+        }
+    }
+}
 
