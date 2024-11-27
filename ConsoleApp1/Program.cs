@@ -37,4 +37,17 @@ class Program
             }
         }
     }
+    static void AddPassword()
+    {
+        Console.Write("Enter account name: ");
+        string account = Console.ReadLine();
+
+        Console.Write("Enter password: ");
+        string password = Console.ReadLine();
+
+        string encryptedPassword = EncryptPassword(password);
+        passwordVault[account] = encryptedPassword;
+
+        Console.WriteLine($"Password for '{account}' added.");
+    }
 
