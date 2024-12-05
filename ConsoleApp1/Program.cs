@@ -58,19 +58,31 @@ class Program
 }
 static bool IsValidPassword(string password)
 {
-    bool hasUpperCase = false;
-    bool hasDigit = false;
-
-    foreach (char c in password)
+    string[] keyboardPatterns = 
     {
-        if (char.IsUpper(c)) hasUpperCase = true;
-        if (char.IsDigit(c)) hasDigit = true;
+        "1234567890",
+        "qwertyuiop",
+        "asdfghjkl",
+        "zxcvbnm",
+        "!@#$%^&*()"
+    };
 
-        if (hasUpperCase && hasDigit)
-            return true;
+    password = password.ToLower(); 
+
+    foreach (string pattern in keyboardPatterns)
+    {
+        for (int i = 0; i <= pattern.Length - 5; i++) 
+        {
+            string sequence = pattern.Substring(i, 5);
+            if (password.Contains(sequence))
+            {
+                Console.WriteLine($"Password must not contain sequences like '{sequence}'.");
+                return false;
+            }
+        }
     }
-    
-    return false;
+
+    return true;
 }
 
    static void ViewPasswords()
